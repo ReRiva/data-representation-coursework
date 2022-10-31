@@ -25,8 +25,8 @@ file_contents = response.text
 origial_text = "Andrew"
 replace_text = "Renan"
 
-#with open("Assign.txt", "w") as file:
-#    file.write(file_contents)
+with open("Assign.txt", "w") as file:
+    file.write(file_contents)
 with open("Assign.txt", "r") as file:
     data = file.read()
     data = data.replace(origial_text, replace_text)
