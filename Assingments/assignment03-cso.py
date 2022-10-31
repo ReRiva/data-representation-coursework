@@ -22,6 +22,6 @@ def getAll(dataset):
     return response.json()
 
 if __name__=="__main__":
-    # Now wen calling the function to save the contents in a file, we only need to add the dataset name as a function parameter
+    # Now when calling the function to save the contents in a file, we only need to add the dataset name as a function parameter
     # instead of changing the url every time
     getAllFile("FIQ02")
