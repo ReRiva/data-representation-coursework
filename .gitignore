@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 Assingments/config.py
 Assignments/config.py
+db_configuration.py
