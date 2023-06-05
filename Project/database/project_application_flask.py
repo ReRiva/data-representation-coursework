@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, request
+from vote_characters import votesCharacters
 
 # A simple votting app to see who is the most popular 58 character from the new Game Honkai Star Rail
 
@@ -20,19 +21,35 @@ def getAllCharnames():
     return jsonify(chars)
 
 
-# Votting on a character
+# Votting on a character and getting the ip address from where the vote came from
+# https://stackoverflow.com/questions/3759981/get-ip-address-of-visitors-using-flask-for-python
 @app.route('/vote/<charactername>', methods=['POST'])
 def voteCharnames(charactername):
-    return jsonify({'name':charactername})
+    
+    ip_address = request.remote_addr
+    data = (charactername, ip_address)
+    vote_id = votesCharacters.createVote(data)
+
+    return jsonify({'id':vote_id})
 
 
+
+
+#################################################################
+# Counting the votes for each Character
 @app.route('/vote/<charactername>', methods=['GET'])
 def getVotesChar(charactername):
-    return '999'  # Placeholder 
+    count = votesCharacters.countCharactersVotes(charactername)
+    return jsonify({charactername:count})
 
+
+
+##############################################
 @app.route('/vote', methods=['GET'])
 def geAllChar(charactername):
     return jsonify({'name':'charactername'}, {'count': 999})
+
+
 
 @app.route('/vote/all', methods=['delete'])
 def deleteALLVotes():
