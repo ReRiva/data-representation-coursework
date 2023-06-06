@@ -1,18 +1,16 @@
 from flask import Flask, jsonify, abort, request
 from vote_characters import votesCharacters
 
-# A simple votting app to see who is the most popular 58 character from the new Game Honkai Star Rail
+# A simple votting app to see who is the most popular Diablo 4 class
 
 app = Flask(__name__, static_url_path='', static_folder='html')
 
-chars = [{'name':'Bailu'},
-         {'name':'Bronya'},
-         {'name':'Clara'},
-         {'name':'Gepard'},
-         {'name':'Himeko'},
-         {'name':'Seele'},
-         {'name':'Welt'},
-         {'name':'Yanqing'},
+chars = [
+         {'name':'Necromancer'},
+         {'name':'Wizard'},
+         {'name':'Sorcerer'},
+         {'name':'Rogue'},
+         {'name':'Druid'},
          ]
 
 # Request to get all characters names
@@ -33,10 +31,8 @@ def voteCharnames(charactername):
     return jsonify({'id':vote_id})
 
 
-
-
 #################################################################
-# Counting the votes for each Character
+# Getting the amount of votes for a specific character
 @app.route('/vote/<charactername>', methods=['GET'])
 def getVotesChar(charactername):
     count = votesCharacters.countCharactersVotes(charactername)
@@ -44,12 +40,22 @@ def getVotesChar(charactername):
 
 
 
-##############################################
+# Getting the a list of names and votes of all characters
 @app.route('/vote', methods=['GET'])
-def geAllChar(charactername):
-    return jsonify({'name':'charactername'}, {'count': 999})
+def geAllChar():
+    allCharCounts = []
+
+    # Looping thru all the characters and their votes and appending it to the empty array created above and printing the result
+    for character in chars:
+        charactername = character['name']
+        count = votesCharacters.countCharactersVotes(charactername)
+        allCharCounts.append({charactername:count})
+    
+    return jsonify(allCharCounts)
 
 
+
+##### Do the delete all votes function
 
 @app.route('/vote/all', methods=['delete'])
 def deleteALLVotes():
