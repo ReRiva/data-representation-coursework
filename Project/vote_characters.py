@@ -108,6 +108,6 @@ if __name__ == "__main__":
     #count = votesCharacters.countCharactersVotes("Karl")
     #print(count)
 
-    print("is that ok?")
+    print("test")
 
 

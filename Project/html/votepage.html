@@ -78,14 +78,15 @@
                     "dataType":"JSON",
                     "success":function(result){
                         var characters = result
-                        
                         // It will return the Character number/Id we will use it to get the character name
                         // and them send it to the function to create add a new character
-                        for (characterid in characters){
+                        for (characterid in characters)
+                        {
                             character = characters[characterid]
-                            console.log(character)
+                            //console.log(character)
                             charactername = character['name']
                             addCharacters(charactername)
+                            //addInfo(charactername)
 
 
                         }
@@ -105,6 +106,7 @@
         function addCharacters(charactername){
             var charactersListElement = document.getElementById('characterlist')
             var charactersTemplate = document.getElementById('template').innerHTML
+           
             newCharactersHtml = charactersTemplate.replace(/##CHARACTERNAME/g, charactername)
             charactersListElement.innerHTML += newCharactersHtml
          
@@ -112,14 +114,69 @@
 
         }
         
+
+
+        
         function vote(charactername){
-        //from minute 42 of the video
+        console.log("Testing Vote for " +charactername)
+        $.ajax({
+                    "url":"/vote/" +charactername,
+                    "method":"POST",
+                    "data":"",
+                    "dataType":"JSON",
+                    "success":function(result){
+                        
+                        voteSuccessful(character)
+                        
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("status:"+status+" message:"+error);
+                    },
+
+                });
+
 
         }
 
-
-
+        function voteSuccessful(character){
+        // JQuery  - disabling the button with the 'votebutton' class
+        //https://stackoverflow.com/questions/15122526/disable-button-in-jquery
+            $('.votebutton').prop('disabled', true)
+        }
         init()
+
+
+    /////// See the classes to remember how to host it and how to add the hyperlinks for the builds and 
+    /////// character info
+
+    /////// Check how to auto add a link for the build suggestion and information abot the classes
+
+
+         //var charactersInfoTemplate = document.getElementById('template').innerHTML
+            //charactersInfo = charactersInfoTemplate.replace(/##CHARACTERINFO/g, characterinfo)
+       // function addInfo(charactername){
+            //var links = [
+                //{ text: 'Barbarian', overview: 'The Barbarian is a staple class in the Diablo franchise and returns for glory in Diablo 4. They use overwhelming strength and a mastery of weapons to turn battlefields into wastelands.', build: 'https://maxroll.gg/d4/build-guides/rend-barbarian-leveling-guide' },
+                //{ text: 'Necromancer', overview: 'The Necromancer returns in Diablo 4 as the master of the Undead! They wield Shadow, Blood, Bone, and Curses as easily as ever before. With a horde of Skeletons, lead by your massive Golem, a single Necro fills the fields of Sanctuary with a terrifying host. The fuel you need to DEVASTATE the entire screen with MASSIVE Corpse Explosions is never more than a single dead demon away!', build: 'https://maxroll.gg/d4/build-guides/summoner-necromancer-leveling-guide' },
+                //{ text: 'Rogue', overview: 'https://openai.com' },
+                //{ text: 'Sorcerer', overview: 'https://openai.com' },
+                //{ text: 'Druid', overview: 'https://openai.com' },
+              //  ];
+            
+
+            //info = links
+            //console.log(info)
+            
+            //var charactersListElement = document.getElementById('characterlist')
+           // var charactersInfoTemplate = document.getElementById('template').innerHTML
+           // charactersInfo = charactersInfoTemplate.replace(/##CHARACTERINFO/g, characterinfo)
+
+
+            
+
+
+        //}
+
     </script>
         
 
